@@ -129,7 +129,7 @@ function SavedPosts() {
 
                                             <video
 
-                                                src={`http://localhost:5000/uploads/posts/${post.media_url}`}
+                                                src={`http://localhost:8080/uploads/posts/${post.media_url}`}
 
                                                 muted
                                             />
@@ -138,7 +138,7 @@ function SavedPosts() {
 
                                             <img
 
-                                                src={`http://localhost:5000/uploads/posts/${post.media_url}`}
+                                                src={`http://localhost:8080/uploads/posts/${post.media_url}`}
 
                                                 alt="saved post"
                                             />

@@ -333,7 +333,7 @@ function PostViewer({
                     {post.profile_photo ? (
                     
                         <img
-                            src={`http://localhost:5000/uploads/profile/${post.profile_photo}`}
+                            src={`http://localhost:8080/uploads/profile/${post.profile_photo}`}
                             alt=""
                             className="post-viewer-avatar"
                         />
@@ -383,14 +383,14 @@ function PostViewer({
                             autoPlay
                         >
                             <source
-                                src={`http://localhost:5000/uploads/posts/${current.media_url}`}
+                                src={`http://localhost:8080/uploads/posts/${current.media_url}`}
                             />
                         </video>
 
                         :
 
                         <img
-                            src={`http://localhost:5000/uploads/posts/${current.media_url}`}
+                            src={`http://localhost:8080/uploads/posts/${current.media_url}`}
                             alt=""
                         />
                     }
@@ -470,7 +470,7 @@ function PostViewer({
                         {post.profile_photo ?
 
                             <img
-                                src={`http://localhost:5000/uploads/profile/${post.profile_photo}`}
+                                src={`http://localhost:8080/uploads/profile/${post.profile_photo}`}
                                 alt=""
                                 className="post-viewer-avatar"
                                 onClick={() => openProfile(post.username)}
@@ -580,7 +580,7 @@ function PostViewer({
                                             ?
 
                                             <img
-                                                src={`http://localhost:5000/uploads/profile/${comment.profile_photo}`}
+                                                src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
                                                 alt=""
                                                 className="viewer-comment-avatar"
                                                 onClick={() => openProfile(comment.username)}

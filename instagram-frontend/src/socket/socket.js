@@ -7,7 +7,7 @@ from "../store/socketStore";
 
 const socket = io(
 
-    "http://localhost:5000",
+    "http://localhost:8080",
 
     {
 

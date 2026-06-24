@@ -199,7 +199,7 @@ function CommentsModal({
                                                 comment.profile_photo ?
                                                                                         
                                                 <img
-                                                    src={`http://localhost:5000/uploads/profile/${comment.profile_photo}`}
+                                                    src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
                                                     alt={comment.username}
                                                     className="comment-avatar"
                                                 />

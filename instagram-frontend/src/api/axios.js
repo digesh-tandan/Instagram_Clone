@@ -7,7 +7,7 @@ from "../store/authStore";
 const API = axios.create({
 
     baseURL:
-    "http://localhost:5000/api",
+    "http://localhost:8080/api",
 
     headers: {
 

@@ -203,7 +203,7 @@ function Navbar() {
         (
             user?.profile_photo
             ?
-            `http://localhost:5000/uploads/profile/${user.profile_photo}`
+            `http://localhost:8080/uploads/profile/${user.profile_photo}`
             :
             null
         );

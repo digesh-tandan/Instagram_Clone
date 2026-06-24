@@ -106,7 +106,7 @@ const processMedia =
                             );
                         }
                     
-                    }, 5000);
+                    }, 8080);
                     return resolve({
 
                         filename:

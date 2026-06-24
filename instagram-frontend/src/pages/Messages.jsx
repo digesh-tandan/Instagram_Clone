@@ -1109,7 +1109,7 @@ function Messages() {
                                         ?
 
                                         <img
-                                            src={`http://localhost:5000/uploads/profile/${chat.profile_photo}`}
+                                            src={`http://localhost:8080/uploads/profile/${chat.profile_photo}`}
 
                                             alt=""
                                         />
@@ -1282,7 +1282,7 @@ function Messages() {
                                         ?
                                     
                                         <img
-                                            src={`http://localhost:5000/uploads/profile/${selectedChat.profile_photo}`}
+                                            src={`http://localhost:8080/uploads/profile/${selectedChat.profile_photo}`}
                                             alt=""
                                         />
                                     
@@ -1576,7 +1576,7 @@ function Messages() {
                                                 {
                                                     msg.message_type === "image" && (
                                                         <img
-                                                            src={`http://localhost:5000/uploads/chat/${msg.media_url}`}
+                                                            src={`http://localhost:8080/uploads/chat/${msg.media_url}`}
                                                             alt=""
                                                         />
                                                     )
@@ -1586,7 +1586,7 @@ function Messages() {
                                                     msg.message_type === "video" && (
                                                         <video
                                                             controls
-                                                            src={`http://localhost:5000/uploads/chat/${msg.media_url}`}
+                                                            src={`http://localhost:8080/uploads/chat/${msg.media_url}`}
                                                         />
                                                     )
                                                 }
@@ -1632,7 +1632,7 @@ function Messages() {
                                             {
                                                 msg.reactions &&
                                                 msg.reactions.length > 0 && (
-                                                
+
                                                     <div
                                                         className={`message-reaction ${
                                                             msg.sender_id === currentUserId
@@ -1640,19 +1640,19 @@ function Messages() {
                                                             : "other-reaction"
                                                         }`}
                                                     >
-                                                    
+
                                                         {[...new Set(
                                                             msg.reactions.map(
                                                                 r => r.reaction
                                                             )
                                                         )].join(" ")}
-                                            
+
                                                         <span className="reaction-count">
-                                                    
+
                                                             {msg.reactions.length}
-                                                    
+
                                                         </span>
-                                                    
+
                                                     </div>
                                                 )
                                             }

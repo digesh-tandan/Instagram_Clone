@@ -165,7 +165,7 @@ const Notifications = () => {
                                 src={
                                     item.profile_photo
                                     ?
-                                    `http://localhost:5000/uploads/profile/${item.profile_photo}`
+                                    `http://localhost:8080/uploads/profile/${item.profile_photo}`
                                     :
                                     "/default-avatar.png"
                                 }

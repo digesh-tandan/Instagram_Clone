@@ -166,7 +166,7 @@ function MyActivity() {
                                                 
                                                     <video
                                                 
-                                                        src={`http://localhost:5000/uploads/posts/${item.media_url}`}
+                                                        src={`http://localhost:8080/uploads/posts/${item.media_url}`}
                                                 
                                                         muted
                                                 
@@ -179,7 +179,7 @@ function MyActivity() {
                                                 
                                                     <img
                                                 
-                                                        src={`http://localhost:5000/uploads/posts/${item.media_url}`}
+                                                        src={`http://localhost:8080/uploads/posts/${item.media_url}`}
                                                 
                                                         alt="activity post"
                                                 

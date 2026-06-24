@@ -1445,7 +1445,7 @@ useMutation({
                                                     {comment.profile_photo ? (
                                                     
                                                         <img
-                                                            src={`http://localhost:5000/uploads/profile/${comment.profile_photo}`}
+                                                            src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
                                                             alt=""
                                                             className="comment-avatar"
                                                         />
@@ -2338,7 +2338,7 @@ useMutation({
                 user.profile_photo ? (
                 
                     <img
-                        src={`http://localhost:5000/uploads/profile/${user.profile_photo}`}
+                        src={`http://localhost:8080/uploads/profile/${user.profile_photo}`}
                         alt={user.username}
                         className="follow-user-avatar"
                     />

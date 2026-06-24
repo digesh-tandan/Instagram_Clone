@@ -78,7 +78,7 @@ function EditProfile() {
             const response =
             await axios.get(
             
-                `http://localhost:5000/api/auth/profile/${user?.username}`,
+                `http://localhost:8080/api/auth/profile/${user?.username}`,
 
                 {
                     headers: {
@@ -201,7 +201,7 @@ function EditProfile() {
             const response =
             await axios.get(
 
-                `http://localhost:5000/api/auth/check-username/${value}`
+                `http://localhost:8080/api/auth/check-username/${value}`
             );
 
             if (
@@ -303,7 +303,7 @@ function EditProfile() {
             const response =
             await axios.put(
 
-                "http://localhost:5000/api/auth/update-profile",
+                "http://localhost:8080/api/auth/update-profile",
 
                 data,
 

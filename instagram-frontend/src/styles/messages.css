@@ -962,7 +962,7 @@
 
 .status-dot.unknown{
 
-    background:#808080;
+    background:#500080;
 }
 
 .chat-avatar-wrapper{
@@ -1005,7 +1005,7 @@
 
 .avatar-status-dot.unknown{
 
-    background:#808080;
+    background:#500080;
 }
 
 .reply-preview{
