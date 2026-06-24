@@ -94,12 +94,26 @@ app.use(express.urlencoded({
 
 // CORS
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://instaclonebydigesh.vercel.app"
+];
+
 app.use(cors({
 
-    origin: [
-      "http://localhost:5173",
-      "https://YOUR-VERCEL-DOMAIN.vercel.app"
-    ],
+    origin: function (origin, callback) {
+
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+
     credentials: true
 }));
 
