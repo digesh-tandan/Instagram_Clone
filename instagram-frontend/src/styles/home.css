@@ -1,0 +1,525 @@
+/* =========================
+   FEED PAGE
+========================= */
+
+.feed-page {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    background: #000;
+}
+
+.feed-container {
+
+    width: 100%;
+
+    max-width: 630px;
+
+    padding: 30px 0 120px;
+}
+
+.feed-end {
+
+    text-align: center;
+
+    color: #888;
+
+    padding: 30px 0 60px;
+
+    font-size: 14px;
+}
+/* =========================
+   SINGLE POST
+========================= */
+
+.feed-post {
+
+    width: 100%;
+
+    border-bottom: 1px solid #262626;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.feed-post-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 0 4px 14px;
+}
+
+.feed-user-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.feed-user-text {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.feed-username {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    font-size: 15px;
+}
+
+.feed-location {
+
+    color: #b3b3b3;
+
+    font-size: 13px;
+
+    margin-top: 2px;
+}
+
+.feed-more-btn {
+
+    background: transparent;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+/* =========================
+   MEDIA
+========================= */
+
+.feed-media-container {
+
+    width: 100%;
+
+    background: #0f0f0f;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    position: relative;
+}
+
+.feed-media {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    background: black;
+
+    max-height: 85vh;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+.feed-post-stat{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:4px;
+
+    height:28px; /* same visual height as icon */
+}
+
+.feed-post-stat-count{
+    display:flex;
+    align-items:center;
+
+    color:white;
+
+    font-size:15px;
+    font-weight:500;
+
+    line-height:1;
+    margin-top:-1px; /* tiny optical adjustment */
+}
+
+.feed-actions-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.feed-icon-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:28px;
+    height:28px;
+
+    padding:0;
+
+    background:none;
+    border:none;
+
+    cursor:pointer;
+}
+.feed-likes-count{
+    margin-top:2px;
+
+    color:white;
+    font-size:14px;
+    font-weight:600;
+}
+.feed-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.feed-actions-left{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.feed-icon{
+    display:block;
+}
+
+.feed-icon:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+/* =========================
+   CAPTION
+========================= */
+
+.feed-caption-section{
+    margin-top:4px;
+
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px;
+
+    line-height:1.35;
+}
+
+.feed-caption-user {
+
+    font-weight: 700;
+
+    color: white;
+
+    font-size: 15px;
+}
+
+.feed-caption-text {
+
+    color: #f1f1f1;
+
+    font-size: 15px;
+
+    word-break: break-word;
+}
+
+/* =========================
+   TIME
+========================= */
+
+.feed-time{
+    margin-top:4px;
+
+    color:#8e8e8e;
+    font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 768px) {
+
+    .feed-container {
+
+        max-width: 100%;
+
+        padding: 0 0 100px;
+    }
+
+    .feed-media-container {
+
+        border-radius: 0;
+    }
+
+    .feed-post {
+
+        padding-left: 0;
+
+        padding-right: 0;
+    }
+}
+
+.feed-avatar-image{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:1px solid #333;
+
+    flex-shrink:0;
+}
+
+.feed-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff512f,
+        #dd2476
+    );
+
+    color:white;
+
+    font-weight:700;
+
+    flex-shrink:0;
+}
+
+/* ==========================
+   FEED SKELETON
+========================== */
+
+.skeleton-post {
+
+    animation:
+    pulse 1.5s infinite;
+
+    margin-bottom: 32px;
+}
+
+.skeleton-avatar {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: #222;
+}
+
+.skeleton-user {
+
+    flex: 1;
+
+    margin-left: 12px;
+}
+
+.skeleton-line {
+
+    height: 12px;
+
+    background: #222;
+
+    border-radius: 8px;
+
+    margin-bottom: 8px;
+}
+
+.skeleton-line.short {
+
+    width: 120px;
+}
+
+.skeleton-line.medium {
+
+    width: 70%;
+}
+
+.skeleton-line.tiny {
+
+    width: 80px;
+}
+
+.skeleton-media {
+
+    width: 100%;
+    aspect-ratio: 1/1;
+
+    background: #222;
+
+    border-radius: 4px;
+
+    margin-top: 12px;
+}
+
+.skeleton-actions {
+
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 16px;
+}
+
+.skeleton-icon {
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #222;
+}
+
+.skeleton-caption {
+
+    margin-top: 16px;
+}
+
+@keyframes pulse {
+
+    0% {
+
+        opacity: .5;
+    }
+
+    50% {
+
+        opacity: 1;
+    }
+
+    100% {
+
+        opacity: .5;
+    }
+}
+
+.feed-carousel-controls{
+
+    position:absolute;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:rgba(0,0,0,.6);
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    backdrop-filter:blur(8px);
+
+    z-index:5;
+}
+
+.feed-carousel-controls button{
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:0;
+}
+
+.feed-carousel-controls span{
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    min-width:40px;
+
+    text-align:center;
+}
+
+.feed-view-comments{
+    padding:0 12px;
+    margin-top:8px;
+
+    color:#a8a8a8;
+    font-size:14px;
+
+    cursor:pointer;
+}
+
+.feed-view-comments:hover{
+    color:white;
+}
+
+.feed-actions,
+.feed-caption-section,
+.feed-time{
+    padding-left:12px;
+    padding-right:12px;
+}

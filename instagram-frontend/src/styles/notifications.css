@@ -1,0 +1,174 @@
+.notifications-page{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:30px;
+
+    color:white;
+}
+
+.notification-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px;
+
+    border-bottom:1px solid #262626;
+}
+
+.notification-card img{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+}
+
+.notification-card p{
+
+    color:#a8a8a8;
+
+    margin-top:5px;
+}
+
+.notification-actions{
+
+    margin-left:auto;
+
+    display:flex;
+
+    gap:10px;
+}
+
+.confirm-btn{
+
+    background:#0095f6;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.delete-btn{
+
+    background:#262626;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.instagram-notifications{
+
+    max-width: 630px;
+
+    margin: 0 auto;
+
+    padding: 30px 20px;
+
+    color: white;
+}
+
+.notifications-header{
+
+    margin-bottom: 30px;
+}
+
+.notifications-header h2{
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+.notification-empty{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    margin-top:100px;
+}
+
+.heart-circle{
+
+    width:96px;
+
+    height:96px;
+
+    border:2px solid white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:24px;
+}
+
+.heart-circle svg{
+
+    font-size:42px;
+}
+
+.notification-empty h3{
+
+    font-size:32px;
+
+    margin-bottom:12px;
+}
+
+.notification-empty p{
+
+    color:#a8a8a8;
+
+    max-width:350px;
+
+    line-height:1.5;
+}
+
+.notification-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+}
+
+.notification-user:hover{
+
+    opacity:.85;
+}
