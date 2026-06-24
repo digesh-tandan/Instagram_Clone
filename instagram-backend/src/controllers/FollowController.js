@@ -2,7 +2,7 @@ const followModel =
 require("../models/FollowModel");
 
 const userModel =
-require("../models/AuthModel");
+require("../models/authModel");
 
 const requestModel =
 require("../models/FollowRequestModel");
