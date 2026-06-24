@@ -19,6 +19,8 @@ from "react-router-dom";
 import { useAuthStore }
 from "../../store/authStore";
 
+import { BASE_URL } from "../../config";
+
 function CommentsModal({
 
     postId,
@@ -199,7 +201,7 @@ function CommentsModal({
                                                 comment.profile_photo ?
                                                                                         
                                                 <img
-                                                    src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
+                                                    src={`${BASE_URL}/uploads/profile/${comment.profile_photo}`}
                                                     alt={comment.username}
                                                     className="comment-avatar"
                                                 />

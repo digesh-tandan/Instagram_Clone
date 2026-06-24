@@ -47,6 +47,8 @@ from "../../store/notificationStore";
 import { useAuthStore }
 from "../../store/authStore";
 
+import { BASE_URL } from "../../config";
+
 function Navbar() {
 
     const location =
@@ -203,7 +205,7 @@ function Navbar() {
         (
             user?.profile_photo
             ?
-            `http://localhost:8080/uploads/profile/${user.profile_photo}`
+            `${BASE_URL}/uploads/profile/${user.profile_photo}`
             :
             null
         );

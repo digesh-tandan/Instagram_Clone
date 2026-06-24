@@ -12,6 +12,8 @@ import PostViewer from "../components/post/PostViewer";
 
 import { getPostById } from "../api/postApi";
 
+import { BASE_URL } from "../config";
+
 function SavedPosts() {
 
     const [
@@ -129,7 +131,7 @@ function SavedPosts() {
 
                                             <video
 
-                                                src={`http://localhost:8080/uploads/posts/${post.media_url}`}
+                                                src={`${BASE_URL}/uploads/posts/${post.media_url}`}
 
                                                 muted
                                             />
@@ -138,7 +140,7 @@ function SavedPosts() {
 
                                             <img
 
-                                                src={`http://localhost:8080/uploads/posts/${post.media_url}`}
+                                                src={`${BASE_URL}/uploads/posts/${post.media_url}`}
 
                                                 alt="saved post"
                                             />

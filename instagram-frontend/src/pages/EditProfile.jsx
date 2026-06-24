@@ -10,6 +10,8 @@ import "../styles/editProfile.css";
 import { useAuthStore }
 from "../store/authStore";
 
+import { BASE_URL } from "../config";
+
 function EditProfile() {
 
     const user =
@@ -78,7 +80,7 @@ function EditProfile() {
             const response =
             await axios.get(
             
-                `http://localhost:8080/api/auth/profile/${user?.username}`,
+                `${BASE_URL}/api/auth/profile/${user?.username}`,
 
                 {
                     headers: {
@@ -201,7 +203,7 @@ function EditProfile() {
             const response =
             await axios.get(
 
-                `http://localhost:8080/api/auth/check-username/${value}`
+                `${BASE_URL}/api/auth/check-username/${value}`
             );
 
             if (
@@ -303,7 +305,7 @@ function EditProfile() {
             const response =
             await axios.put(
 
-                "http://localhost:8080/api/auth/update-profile",
+                "${BASE_URL}/api/auth/update-profile",
 
                 data,
 

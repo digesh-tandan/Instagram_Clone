@@ -28,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore }
 from "../../store/authStore";
 
+import { BASE_URL } from "../../config";
+
 function PostViewer({
 
     post,
@@ -333,7 +335,7 @@ function PostViewer({
                     {post.profile_photo ? (
                     
                         <img
-                            src={`http://localhost:8080/uploads/profile/${post.profile_photo}`}
+                            src={`${BASE_URL}/uploads/profile/${post.profile_photo}`}
                             alt=""
                             className="post-viewer-avatar"
                         />
@@ -383,14 +385,14 @@ function PostViewer({
                             autoPlay
                         >
                             <source
-                                src={`http://localhost:8080/uploads/posts/${current.media_url}`}
+                                src={`${BASE_URL}/uploads/posts/${current.media_url}`}
                             />
                         </video>
 
                         :
 
                         <img
-                            src={`http://localhost:8080/uploads/posts/${current.media_url}`}
+                            src={`${BASE_URL}/uploads/posts/${current.media_url}`}
                             alt=""
                         />
                     }
@@ -470,7 +472,7 @@ function PostViewer({
                         {post.profile_photo ?
 
                             <img
-                                src={`http://localhost:8080/uploads/profile/${post.profile_photo}`}
+                                src={`${BASE_URL}/uploads/profile/${post.profile_photo}`}
                                 alt=""
                                 className="post-viewer-avatar"
                                 onClick={() => openProfile(post.username)}
@@ -580,7 +582,7 @@ function PostViewer({
                                             ?
 
                                             <img
-                                                src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
+                                                src={`${BASE_URL}/uploads/profile/${comment.profile_photo}`}
                                                 alt=""
                                                 className="viewer-comment-avatar"
                                                 onClick={() => openProfile(comment.username)}

@@ -41,6 +41,8 @@ from "../components/comments/CommentsModal";
 import { useAuthStore }
 from "../store/authStore";
 
+import { BASE_URL } from "../config";
+
 function Profile() {
 
     const { username } =
@@ -1445,7 +1447,7 @@ useMutation({
                                                     {comment.profile_photo ? (
                                                     
                                                         <img
-                                                            src={`http://localhost:8080/uploads/profile/${comment.profile_photo}`}
+                                                            src={`${BASE_URL}/uploads/profile/${comment.profile_photo}`}
                                                             alt=""
                                                             className="comment-avatar"
                                                         />
@@ -2338,7 +2340,7 @@ useMutation({
                 user.profile_photo ? (
                 
                     <img
-                        src={`http://localhost:8080/uploads/profile/${user.profile_photo}`}
+                        src={`${BASE_URL}/uploads/profile/${user.profile_photo}`}
                         alt={user.username}
                         className="follow-user-avatar"
                     />

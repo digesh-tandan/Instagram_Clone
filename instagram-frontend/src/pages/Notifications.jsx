@@ -18,6 +18,8 @@ import {
 }
 from "react-router-dom";
 
+import { BASE_URL } from "../config";
+
 const Notifications = () => {
 
     const navigate =
@@ -165,7 +167,7 @@ const Notifications = () => {
                                 src={
                                     item.profile_photo
                                     ?
-                                    `http://localhost:8080/uploads/profile/${item.profile_photo}`
+                                    `${BASE_URL}/uploads/profile/${item.profile_photo}`
                                     :
                                     "/default-avatar.png"
                                 }

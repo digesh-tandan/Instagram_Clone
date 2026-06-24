@@ -43,6 +43,8 @@ import {
 }
 from "../store/messageStore";
 
+import { BASE_URL } from "../config";
+
 function Messages() {
 
     const currentUser =
@@ -1109,7 +1111,7 @@ function Messages() {
                                         ?
 
                                         <img
-                                            src={`http://localhost:8080/uploads/profile/${chat.profile_photo}`}
+                                            src={`${BASE_URL}/uploads/profile/${chat.profile_photo}`}
 
                                             alt=""
                                         />
@@ -1282,7 +1284,7 @@ function Messages() {
                                         ?
                                     
                                         <img
-                                            src={`http://localhost:8080/uploads/profile/${selectedChat.profile_photo}`}
+                                            src={`${BASE_URL}/uploads/profile/${selectedChat.profile_photo}`}
                                             alt=""
                                         />
                                     
@@ -1576,7 +1578,7 @@ function Messages() {
                                                 {
                                                     msg.message_type === "image" && (
                                                         <img
-                                                            src={`http://localhost:8080/uploads/chat/${msg.media_url}`}
+                                                            src={`${BASE_URL}/uploads/chat/${msg.media_url}`}
                                                             alt=""
                                                         />
                                                     )
@@ -1586,7 +1588,7 @@ function Messages() {
                                                     msg.message_type === "video" && (
                                                         <video
                                                             controls
-                                                            src={`http://localhost:8080/uploads/chat/${msg.media_url}`}
+                                                            src={`${BASE_URL}/uploads/chat/${msg.media_url}`}
                                                         />
                                                     )
                                                 }

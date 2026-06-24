@@ -7,6 +7,8 @@ import "../styles/myActivity.css";
 import PostViewer from "../components/post/PostViewer";
 import { getPostById } from "../api/postApi";
 
+import { BASE_URL } from "../config";
+
 function MyActivity() {
 
     const [selectedPost, setSelectedPost] =
@@ -166,7 +168,7 @@ function MyActivity() {
                                                 
                                                     <video
                                                 
-                                                        src={`http://localhost:8080/uploads/posts/${item.media_url}`}
+                                                        src={`${BASE_URL}/uploads/posts/${item.media_url}`}
                                                 
                                                         muted
                                                 
@@ -179,7 +181,7 @@ function MyActivity() {
                                                 
                                                     <img
                                                 
-                                                        src={`http://localhost:8080/uploads/posts/${item.media_url}`}
+                                                        src={`${BASE_URL}/uploads/posts/${item.media_url}`}
                                                 
                                                         alt="activity post"
                                                 
