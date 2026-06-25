@@ -173,17 +173,27 @@ const register = async (req, res) => {
                                             });
                                         }
                                         // Send OTP Email
-                                        sendOTPEmail(
-                                            email,
-                                            otp
-                                        ).catch((emailError) => {
-                                        
-                                            console.log(
-                                                "Register OTP email failed:",
-                                                emailError.message
+                                        try {
+
+                                            await sendOTPEmail(
+                                                email,
+                                                otp,
+                                                "Email Verification"
                                             );
-                                        });
-                                        
+
+                                            console.log("OTP Email Sent Successfully");
+
+                                        } catch (emailError) {
+
+                                            console.error("EMAIL ERROR");
+                                            console.error(emailError);
+
+                                            return res.status(500).json({
+                                                success: false,
+                                                message: "Failed to send OTP email"
+                                            });
+                                        }
+
                                         return res.status(200).json({
                                             success: true,
                                             message: "OTP sent successfully"
