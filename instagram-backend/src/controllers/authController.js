@@ -185,12 +185,13 @@ const register = async (req, res) => {
 
                                         } catch (emailError) {
 
-                                            console.error("EMAIL ERROR");
-                                            console.error(emailError);
-
+                                            console.log("========== EMAIL ERROR ==========");
+                                            console.dir(emailError, { depth: null });
+                                            console.log("=================================");
+                                                                                
                                             return res.status(500).json({
                                                 success: false,
-                                                message: "Failed to send OTP email"
+                                                message: emailError.message
                                             });
                                         }
 

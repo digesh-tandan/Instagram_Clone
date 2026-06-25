@@ -1,90 +1,55 @@
-const dns = require("dns");
+console.log("RESEND KEY:", process.env.RESEND_API_KEY);
+const { Resend } = require("resend");
 
-dns.setDefaultResultOrder("ipv4first");
-
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000
-});
-
-transporter.verify(function (error, success) {
-
-    if (error) {
-        console.log("SMTP ERROR");
-        console.log(error);
-    } else {
-        console.log("SMTP Ready");
-    }
-
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOTPEmail = async (
     email,
-    otp = null,
+    otp,
     purpose = "OTP Verification",
     customMessage = null
 ) => {
-    if (!email) {
-        throw new Error(
-            "Recipient email is required"
-        );
-    }
-    let subject =
-    purpose;
-    let html = "";
-    // Custom Message Email
-    if (customMessage) {
-        html = `
+
+    const html = customMessage
+        ? `
             <h2>${purpose}</h2>
             <p>${customMessage}</p>
-        `;
-    }
-    // OTP Email
-    else {
-        html = `
+          `
+        : `
             <h2>${purpose}</h2>
-            <p>Your OTP is:</p>
+
+            <p>Your OTP is</p>
+
             <h1>${otp}</h1>
+
             <p>
-                This OTP will expire in 10 minutes.
+                This OTP expires in 10 minutes.
             </p>
-        `;
-    }
-    const mailOptions = {
-        from:
-        process.env.EMAIL_USER,
-        to:
-        email,
-        subject,
+          `;
+
+    const { data, error } = await resend.emails.send({
+
+        from: "Instagram Clone <onboarding@resend.dev>",
+
+        to: email,
+
+        subject: purpose,
+
         html
-    };
 
-    console.log("========== EMAIL DEBUG ==========");
-    console.log("To:", email);
-    console.log("From:", process.env.EMAIL_USER);
-    console.log("OTP:", otp);
-    console.log("================================");
+    });
 
-    console.log("========== EMAIL ==========");
-    console.log(mailOptions);
-    console.log("===========================");
-    
-    const info = await transporter.sendMail(mailOptions);
+    if (error) {
+
+        console.error(error);
+
+        throw error;
+
+    }
 
     console.log("Email sent");
-    console.log(info);
+
+    console.log(data);
 };
 
 const sendResetOTPEmail = async (
@@ -92,99 +57,91 @@ const sendResetOTPEmail = async (
     otp,
     securityInfo
 ) => {
-    await transporter.sendMail({
-        from:
-        process.env.EMAIL_USER,
-        to:
-        email,
-        subject:
-        "Forgot Password OTP",
-        html: `
-            <h2>Password Reset OTP</h2>
 
-            <p>Your OTP is:</p>
+    const html = `
+        <h2>Password Reset OTP</h2>
 
-            <h1>${otp}</h1>
-            
-            <p>
-            This OTP expires in 10 minutes.
-            </p>
-            <hr>
+        <h1>${otp}</h1>
 
-            <p>
-            IP Address:
-            ${securityInfo.ipAddress}
-            </p>
+        <p>
+            Expires in 10 minutes.
+        </p>
 
-            <p>
-            Browser:
-            ${securityInfo.browser}
-            </p>
+        <hr>
 
-            <p>
-            OS:
-            ${securityInfo.os}
-            </p>
-            
-            <p>
-            Location:
-            ${securityInfo.location}
-            </p>
-        `
+        <p><b>IP:</b> ${securityInfo.ipAddress}</p>
+
+        <p><b>Browser:</b> ${securityInfo.browser}</p>
+
+        <p><b>OS:</b> ${securityInfo.os}</p>
+
+        <p><b>Location:</b> ${securityInfo.location}</p>
+    `;
+
+    const { error } = await resend.emails.send({
+
+        from: "Instagram Clone <onboarding@resend.dev>",
+
+        to: email,
+
+        subject: "Forgot Password OTP",
+
+        html
+
     });
+
+    if (error) throw error;
+
 };
 
 const sendDeleteAccountOTPEmail = async (
-    to,
+
+    email,
+
     otp,
+
     securityInfo
+
 ) => {
-    await transporter.sendMail({
-        from:
-        process.env.EMAIL_USER,
-        to,
-        subject:
-        "Delete Account OTP",
-        html: `
-            <h2>Delete Account Verification</h2>
 
-            <p>Your OTP is:</p>
+    const html = `
+        <h2>Delete Account Verification</h2>
 
-            <h1>${otp}</h1>
-            <hr>
+        <h1>${otp}</h1>
 
-            <p>
-            IP Address:
-            ${securityInfo.ipAddress}
-            </p>
+        <hr>
 
-            <p>
-            Browser:
-            ${securityInfo.browser}
-            </p>
+        <p><b>IP:</b> ${securityInfo.ipAddress}</p>
 
-            <p>
-            OS:
-            ${securityInfo.os}
-            </p>
+        <p><b>Browser:</b> ${securityInfo.browser}</p>
 
-            <p>
-            Location:
-            ${securityInfo.location}
-            </p>
+        <p><b>OS:</b> ${securityInfo.os}</p>
 
-            <br>
+        <p><b>Location:</b> ${securityInfo.location}</p>
+    `;
 
-            <p>
-            If this wasn't you,
-            change your password immediately.
-            </p>
-        `
+    const { error } = await resend.emails.send({
+
+        from: "Instagram Clone <onboarding@resend.dev>",
+
+        to: email,
+
+        subject: "Delete Account OTP",
+
+        html
+
     });
+
+    if (error) throw error;
+
 };
 
 module.exports = {
+
     sendOTPEmail,
+
     sendResetOTPEmail,
+
     sendDeleteAccountOTPEmail
-}
+
+};
