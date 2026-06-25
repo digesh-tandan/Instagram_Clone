@@ -3,8 +3,10 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
-    secure: false,          // true only for 465
+    secure: false,
     requireTLS: true,
+
+    family: 4,
 
     auth: {
         user: process.env.EMAIL_USER,
@@ -73,10 +75,15 @@ const sendOTPEmail = async (
     console.log("From:", process.env.EMAIL_USER);
     console.log("OTP:", otp);
     console.log("================================");
+
+    console.log("========== EMAIL ==========");
+    console.log(mailOptions);
+    console.log("===========================");
     
-    await transporter.sendMail(
-        mailOptions
-    );
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log("Email sent");
+    console.log(info);
 };
 
 const sendResetOTPEmail = async (
