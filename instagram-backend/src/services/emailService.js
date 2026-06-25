@@ -67,6 +67,13 @@ const sendOTPEmail = async (
         subject,
         html
     };
+
+    console.log("========== EMAIL DEBUG ==========");
+    console.log("To:", email);
+    console.log("From:", process.env.EMAIL_USER);
+    console.log("OTP:", otp);
+    console.log("================================");
+    
     await transporter.sendMail(
         mailOptions
     );
