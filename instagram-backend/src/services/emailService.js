@@ -1,55 +1,106 @@
-console.log("RESEND KEY:", process.env.RESEND_API_KEY);
-const { Resend } = require("resend");
+const dns = require("dns");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+dns.setDefaultResultOrder("ipv4first");
 
-const sendOTPEmail = async (
-    email,
-    otp,
-    purpose = "OTP Verification",
-    customMessage = null
-) => {
+const nodemailer = require("nodemailer");
 
-    const html = customMessage
-        ? `
-            <h2>${purpose}</h2>
-            <p>${customMessage}</p>
-          `
-        : `
-            <h2>${purpose}</h2>
+const transporter = nodemailer.createTransport({
 
-            <p>Your OTP is</p>
+    host: process.env.SMTP_HOST,
 
-            <h1>${otp}</h1>
+    port: Number(process.env.SMTP_PORT),
 
-            <p>
-                This OTP expires in 10 minutes.
-            </p>
-          `;
+    secure: false,
 
-    const { data, error } = await resend.emails.send({
+    auth: {
 
-        from: "Instagram Clone <onboarding@resend.dev>",
+        user: process.env.SMTP_USER,
 
-        to: email,
-
-        subject: purpose,
-
-        html
-
-    });
-
-    if (error) {
-
-        console.error(error);
-
-        throw error;
+        pass: process.env.SMTP_PASS
 
     }
 
-    console.log("Email sent");
+});
 
-    console.log(data);
+console.log("SMTP HOST:", process.env.SMTP_HOST);
+console.log("SMTP USER:", process.env.SMTP_USER);
+console.log("SMTP PASS:", process.env.SMTP_PASS ? "Loaded" : "Missing");
+console.log("FROM:", process.env.EMAIL_FROM);
+
+transporter.verify(function (error, success) {
+
+    if (error) {
+        console.log("SMTP ERROR");
+        console.log(error);
+    } else {
+        console.log("SMTP Ready");
+    }
+
+});
+
+const sendOTPEmail = async (
+    email,
+    otp = null,
+    purpose = "OTP Verification",
+    customMessage = null
+) => {
+    if (!email) {
+        throw new Error(
+            "Recipient email is required"
+        );
+    }
+    let subject =
+    purpose;
+    let html = "";
+    // Custom Message Email
+    if (customMessage) {
+        html = `
+            <h2>${purpose}</h2>
+            <p>${customMessage}</p>
+        `;
+    }
+    // OTP Email
+    else {
+        html = `
+            <h2>${purpose}</h2>
+            <p>Your OTP is:</p>
+            <h1>${otp}</h1>
+            <p>
+                This OTP will expire in 10 minutes.
+            </p>
+        `;
+    }
+    const mailOptions = {
+        from:
+        process.env.EMAIL_FROM,
+        to:
+        email,
+        subject,
+        html
+    };
+
+    console.log("========== EMAIL DEBUG ==========");
+    console.log("To:", email);
+    console.log("From:", process.env.EMAIL_FROM);
+    console.log("OTP:", otp);
+    console.log("================================");
+
+    console.log("========== EMAIL ==========");
+    console.log(mailOptions);
+    console.log("===========================");
+    
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        
+        console.log("EMAIL SENT");
+        console.log(info);
+        
+    } catch (err) {
+        console.error("MAIL ERROR:");
+        console.error(err);
+    
+        throw err;
+    }
 };
 
 const sendResetOTPEmail = async (
@@ -57,91 +108,99 @@ const sendResetOTPEmail = async (
     otp,
     securityInfo
 ) => {
+    await transporter.sendMail({
+        from:
+        process.env.EMAIL_FROM,
+        to:
+        email,
+        subject:
+        "Forgot Password OTP",
+        html: `
+            <h2>Password Reset OTP</h2>
 
-    const html = `
-        <h2>Password Reset OTP</h2>
+            <p>Your OTP is:</p>
 
-        <h1>${otp}</h1>
+            <h1>${otp}</h1>
+            
+            <p>
+            This OTP expires in 10 minutes.
+            </p>
+            <hr>
 
-        <p>
-            Expires in 10 minutes.
-        </p>
+            <p>
+            IP Address:
+            ${securityInfo.ipAddress}
+            </p>
 
-        <hr>
+            <p>
+            Browser:
+            ${securityInfo.browser}
+            </p>
 
-        <p><b>IP:</b> ${securityInfo.ipAddress}</p>
-
-        <p><b>Browser:</b> ${securityInfo.browser}</p>
-
-        <p><b>OS:</b> ${securityInfo.os}</p>
-
-        <p><b>Location:</b> ${securityInfo.location}</p>
-    `;
-
-    const { error } = await resend.emails.send({
-
-        from: "Instagram Clone <onboarding@resend.dev>",
-
-        to: email,
-
-        subject: "Forgot Password OTP",
-
-        html
-
+            <p>
+            OS:
+            ${securityInfo.os}
+            </p>
+            
+            <p>
+            Location:
+            ${securityInfo.location}
+            </p>
+        `
     });
-
-    if (error) throw error;
-
 };
 
 const sendDeleteAccountOTPEmail = async (
-
-    email,
-
+    to,
     otp,
-
     securityInfo
-
 ) => {
+    await transporter.sendMail({
+        from:
+        process.env.EMAIL_FROM,
+        to,
+        subject:
+        "Delete Account OTP",
+        html: `
+            <h2>Delete Account Verification</h2>
 
-    const html = `
-        <h2>Delete Account Verification</h2>
+            <p>Your OTP is:</p>
 
-        <h1>${otp}</h1>
+            <h1>${otp}</h1>
+            <hr>
 
-        <hr>
+            <p>
+            IP Address:
+            ${securityInfo.ipAddress}
+            </p>
 
-        <p><b>IP:</b> ${securityInfo.ipAddress}</p>
+            <p>
+            Browser:
+            ${securityInfo.browser}
+            </p>
 
-        <p><b>Browser:</b> ${securityInfo.browser}</p>
+            <p>
+            OS:
+            ${securityInfo.os}
+            </p>
 
-        <p><b>OS:</b> ${securityInfo.os}</p>
+            <p>
+            Location:
+            ${securityInfo.location}
+            </p>
 
-        <p><b>Location:</b> ${securityInfo.location}</p>
-    `;
+            <br>
 
-    const { error } = await resend.emails.send({
-
-        from: "Instagram Clone <onboarding@resend.dev>",
-
-        to: email,
-
-        subject: "Delete Account OTP",
-
-        html
-
+            <p>
+            If this wasn't you,
+            change your password immediately.
+            </p>
+        `
     });
-
-    if (error) throw error;
-
 };
 
 module.exports = {
-
     sendOTPEmail,
-
     sendResetOTPEmail,
-
     sendDeleteAccountOTPEmail
-
-};
+}
