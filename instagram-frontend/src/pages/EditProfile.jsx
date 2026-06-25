@@ -10,7 +10,7 @@ import "../styles/editProfile.css";
 import { useAuthStore }
 from "../store/authStore";
 
-import { BASE_URL } from "../config";
+import {BASE_URL} from "../config";
 
 function EditProfile() {
 
@@ -305,7 +305,7 @@ function EditProfile() {
             const response =
             await axios.put(
 
-                "${BASE_URL}/api/auth/update-profile",
+                `${BASE_URL}/api/auth/update-profile`,
 
                 data,
 
