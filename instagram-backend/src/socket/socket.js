@@ -259,8 +259,20 @@ const initializeSocket = (server) => {
             }
         );
 
-        // Seen Status
+        // LEAVE CONVERSATION
 
+        socket.on(
+            "leaveConversation",
+            (conversationId) => {
+            
+                socket.leave(
+                    `conversation_${conversationId}`
+                );
+            
+            }
+        );
+
+        // SEEN STATUS
         socket.on(
             "messagesSeen",
             (conversationId) => {

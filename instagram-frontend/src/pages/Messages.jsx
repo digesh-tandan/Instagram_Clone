@@ -27,6 +27,10 @@ import {
 }
 from "react-router-dom";
 
+import {
+    useNavigate
+} from "react-router-dom";
+
 import socket from "../socket/socket";
 
 import { useChatStore }
@@ -174,6 +178,8 @@ function Messages() {
 
     const [searchParams] = 
     useSearchParams();
+
+    const navigate = useNavigate();
 
     const onlineUsers =
     useSocketStore(
@@ -327,18 +333,6 @@ function Messages() {
 
     useEffect(() => {
 
-        if (!selectedChat)
-            return;
-
-        socket.emit(
-            "joinConversation",
-            selectedChat.conversationId
-        );
-
-    }, [selectedChat]);
-
-    useEffect(() => {
-
         loadUnreadCounts();
         
     }, []);
@@ -426,6 +420,27 @@ function Messages() {
 
     useEffect(() => {
 
+        socket.off(
+            "newMessage"
+        );
+    
+        socket.off(
+            "userTyping"
+        );
+    
+        socket.off(
+            "userStoppedTyping"
+        );
+        socket.off(
+            "refreshChats"
+        );
+        socket.off(
+            "messageReaction"
+        );
+        socket.off(
+            "reactionRemoved"
+        );
+
         socket.on(
 
             "newMessage",
@@ -446,9 +461,25 @@ function Messages() {
                 
                 ) {
                 
-                    addMessage(
-                        message
-                    );
+                    setMessages(prev=>{
+
+                        if(
+                            prev.some(
+                                m=>m.id===message.id
+                            )
+                        ){
+                            return prev;
+                        }
+                    
+                        return[
+                            ...prev,
+                            {
+                                ...message,
+                                reactions:[]
+                            }
+                        ];
+                    
+                    });
                 
                     markMessagesSeen(
                         selectedChat.conversationId
@@ -641,8 +672,9 @@ function Messages() {
 
             await refetch();
 
-            window.location.href =
-            `/messages?conversation=${conversationId}`;
+            navigate(
+                `/messages?conversation=${conversationId}`
+            );
 
         } catch(err) {
 
@@ -657,63 +689,51 @@ function Messages() {
         }
     };
 
-    useEffect(() => {
+    useEffect(()=>{
 
-        if (!selectedChat)
+        if(!selectedChat){
             return;
-
-        loadMessages();
-
+        }
+    
+        loadMessages(
+            selectedChat.conversationId
+        );
+    
         loadUnreadCounts();
-
-    }, [
-        selectedChat,
-        currentUserId,
-        refetch
+    
+    },[
+        selectedChat?.conversationId
     ]);
 
     useEffect(() => {
 
         const conversationId =
-        searchParams.get(
-            "conversation"
-        );
+        searchParams.get("conversation");
 
-        if (
+        if(
             !conversationId ||
             !recentChats.length
-        ) {
-
+        ){
             return;
         }
 
         const chat =
         recentChats.find(
-
-            (c) =>
-
-            String(
-                c.conversationId
-            )
-
-            ===
-
-            String(
-                conversationId
-            )
+            c =>
+            Number(c.conversationId) ===
+            Number(conversationId)
         );
 
-        if (chat) {
-
-            setSelectedChat(
-                chat
-            );
+        if(!chat){
+            return;
         }
 
-    }, [
+        setSelectedChat(chat);
 
+        loadMessages(chat.conversationId);
+
+    },[
         recentChats,
-
         searchParams
     ]);
 
@@ -727,55 +747,82 @@ function Messages() {
 
     }, [messages]);
 
-    const loadMessages = async () => {
+    useEffect(() => {
 
-        try {
+        if (!selectedChat) return;
 
-            const data =
-            await getMessages(
+        socket.emit(
+            "joinConversation",
+            selectedChat.conversationId
+        );
+
+        return () => {
+
+            socket.emit(
+                "leaveConversation",
                 selectedChat.conversationId
             );
 
-            const formatted = data.map(msg => ({
+        };
+
+    }, [selectedChat]);
+
+    const loadMessages = async (
+        conversationId =
+        selectedChat?.conversationId
+    ) => {
+
+        if(!conversationId){
+            return [];
+        }
+
+        try{
+
+            const data =
+            await getMessages(
+                conversationId
+            );
+
+            const formatted =
+            data.map(msg=>({
+
                 ...msg,
 
                 reactions:
-                    typeof msg.reactions === "string"
-                    ? JSON.parse(msg.reactions || "[]")
-                    : msg.reactions || []
+                typeof msg.reactions==="string"
+
+                ?
+
+                JSON.parse(msg.reactions||"[]")
+
+                :
+
+                msg.reactions||[]
+
             }));
 
-            setMessages(prev => {
-            
-                if (
-                    JSON.stringify(prev)
-                    ===
-                    JSON.stringify(formatted)
-                ) {
-                    return prev;
-                }
-            
-                return formatted;
-            });
-
-            return formatted;
+            setMessages(formatted);
 
             await markMessagesSeen(
-                selectedChat.conversationId
+                conversationId
             );
 
             socket.emit(
                 "refreshChats"
             );
 
-            return data;
+            return formatted;
 
-        } catch(err) {
+        }
+
+        catch(err){
 
             console.log(err);
 
             return [];
+
         }
+
     };
 
     const startEditingMessage = (
@@ -977,11 +1024,20 @@ function Messages() {
 
         try {
 
+            const newMessage =
             await sendMessage(
                 selectedChat.conversationId,
                 text,
                 replyingTo?.id || null
             );
+
+            setMessages(prev=>[
+                ...prev,
+                {
+                    ...newMessage.message,
+                    reactions:[]
+                }
+            ]);
 
             await queryClient.refetchQueries({
                 queryKey:["recentChats"]
@@ -1069,15 +1125,19 @@ function Messages() {
                                             : ""
                                     }`}
 
-                                    onClick={async () => {
+                                    onClick={async()=>{
 
                                         setSelectedChat(chat);
 
-                                        setUnreadCounts(prev => ({
+                                        await loadMessages(
+                                            chat.conversationId
+                                        );
+                                    
+                                        setUnreadCounts(prev=>({
                                         
                                             ...prev,
                                         
-                                            [chat.conversationId]: 0
+                                            [chat.conversationId]:0
                                         
                                         }));
                                     
@@ -1086,14 +1146,11 @@ function Messages() {
                                         );
                                     
                                         socket.emit(
-                                            "messagesSeen",
-                                            chat.conversationId
-                                        );
-                                    
-                                        socket.emit(
                                             "refreshChats"
                                         );
+                                    
                                     }}
+                                    
                                     onContextMenu={(e) => {
 
                                         e.preventDefault();

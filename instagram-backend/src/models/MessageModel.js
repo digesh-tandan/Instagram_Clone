@@ -725,49 +725,6 @@ const removeReaction = (
     );
 };
 
-// get reaction
-
-const getMessageReactions = (
-    conversationId,
-    callback
-) => {
-    const sql = `
-        SELECT
-
-            m.*,
-
-            u.username,
-
-            u.profile_photo,
-
-            (
-                SELECT mr.reaction
-
-                FROM message_reactions mr
-
-                WHERE mr.message_id = m.id
-
-                LIMIT 1
-
-            ) AS reaction
-
-        FROM messages m
-
-        INNER JOIN users u
-        ON m.sender_id = u.id
-
-        WHERE m.conversation_id = ?
-
-        ORDER BY m.created_at ASC
-    `;
-
-    db.query(
-        sql,
-        [conversationId],
-        callback
-    );
-};
-
 module.exports = {
 
     findConversationBetweenUsers,
@@ -800,7 +757,5 @@ module.exports = {
 
     reactToMessage,
 
-    removeReaction,
-
-    getMessageReactions
+    removeReaction
 };
