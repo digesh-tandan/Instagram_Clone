@@ -22,10 +22,11 @@ const transporter = nodemailer.createTransport({
 
 });
 
-console.log("SMTP HOST:", process.env.SMTP_HOST);
-console.log("SMTP USER:", process.env.SMTP_USER);
-console.log("SMTP PASS:", process.env.SMTP_PASS ? "Loaded" : "Missing");
-console.log("FROM:", process.env.EMAIL_FROM);
+console.log("SMTP_HOST:", process.env.SMTP_HOST);
+console.log("SMTP_PORT:", process.env.SMTP_PORT);
+console.log("SMTP_USER:", process.env.SMTP_USER);
+console.log("SMTP_PASS:", process.env.SMTP_PASS ? "Loaded" : "Missing");
+console.log("EMAIL_FROM:", process.env.EMAIL_FROM);
 
 transporter.verify(function (error, success) {
 
