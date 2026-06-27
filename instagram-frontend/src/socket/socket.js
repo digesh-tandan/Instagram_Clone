@@ -11,15 +11,17 @@ const socket = io(
 
     {
 
-        transports: ["websocket"],
+        transports: ["websocket", "polling"],
 
-        autoConnect: true,
+        autoConnect: false,
 
         reconnection: true,
 
         reconnectionAttempts: 10,
 
-        reconnectionDelay: 1000
+        reconnectionDelay: 1000,
+
+        withCredentials: true
     }
 );
 
