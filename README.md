@@ -200,8 +200,15 @@ DB_NAME=instagram_clone
 
 JWT_SECRET=your_secret_key
 
-EMAIL_USER=your_email
-EMAIL_PASS=your_email_password
+# Email API
+BREVO_API_KEY=your_api_key_from_brevo
+EMAIL_FROM=enter_your_email
+EMAIL_FROM_NAME=Instagram Clone
+
+# Image API
+IMAGEKIT_PUBLIC_KEY=enter_public_key_generated_from_imagekit
+IMAGEKIT_PRIVATE_KEY=enter_private_key_generated_from_imagekit
+IMAGEKIT_URL_ENDPOINT=enter_your_imagekit_url
 ```
 
 ---
@@ -249,7 +256,8 @@ EMAIL_PASS=your_email_password
 
 **Digesh Kumar Tandan**
 
-* MCA Student, Bhilai Institute of Technology, Durg
+* Backend Developer Intern,
+* Hyphun Technologies, Bhilai
 * Aspiring Full Stack Developer
 
 GitHub: https://github.com/digesh-tandan
